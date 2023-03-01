@@ -1,57 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, View,TextInput,ScrollView } from 'react-native';
-import ProductList from './src/screens/ProductList';
-export default function App() {
-  const productlist=[{
-    id: 1,
-    name: 'Nguyễn Hoàng Trà'
-  },{
-    id:2,
-    name:'Trần Tiến Hưng'
-  }
-];
-const[switchState,setSwitchState]= useState(false);
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import Manager from "./Manager";
+import { NavigationContainer } from "@react-navigation/native";
+import{View,Text,Button} from 'react-native'
+import Home from "./src/screens/Home";
+import UserList from "./src/screens/UserList";
+import Info from "./src/screens/Info";
+import Product from "./src/screens/Product";
+import Form from "./src/screens/Form";
 
-  return (
-    <ScrollView>
-    <View style={styles.container}>
-       
-      <Text style={styles.text}>Họ và tên: Nguyễn Hoàng Trà</Text>
-      <Text style={styles.text}>MSV: PH26979</Text>
-      <Button title={'thêm mới'} onPress={() => setSwitchState(!switchState)}/>
-     {
-      switchState?<>
-      <Text style={styles.text1}>Thêm mới</Text>
-<TextInput >Tên</TextInput>
-<TextInput >Mô tả</TextInput>
-<TextInput >Link ảnh</TextInput>
-<Button title={'hủy'} onPress={() => setSwitchState(!switchState)}/> 
-<Button title={'lưu'}/>
 
-      </>
-      :null
-     }
-     <ProductList data={productlist}/>
-      <StatusBar style="auto" />
-    </View>
-    </ScrollView>
-  );
-}
+const Stack = createNativeStackNavigator();
+// const Detail = (props) => {
+//     const navigation = props.navigation;
+//     return (<View>
+//         <Text>Detail</Text>
+//         <Button
+//         title='Sang Manager'
+//         onPress={() => navigation.navigate('Manager')}
+//     /></View>)
+// };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text:{
-    fontSize:20,
-    color:'black'
-  },
-  text1:{
-    fontSize:20,
-    color:'red'
-  }
-});
+// các màn hình như sau
+// home: gồm 1 nút vào trang thông tin cá nhân, 1 nút vào trang danh sách
+// bấm nút vào trang thông tin chuyển màn hình Info
+// bấm nút trang danh sách chuyển màn hình userlist
+
+// khi màn hình được chuyền component trong stack.screen thì các màn hình đó 
+//sẽ nhận được props có tên là navigation, trong đó navigation.navigater('tên màn hình')
+//giúp di chuyển sang màn hình khác
+const App = () => {
+    return (
+       <NavigationContainer>
+        {/*initialroutname nhan vao ten cua man hinh trang chu */}
+        <Stack.Navigator initialRouteName="Home1">
+            <Stack.Screen  name='Home1' component={Home}/>
+            <Stack.Screen name='Form' component={Form} />
+            <Stack.Screen  name='Info' component={Info}/>
+            <Stack.Screen  name='UserList' component={UserList}/>
+            <Stack.Screen  name='Product' component={Product}/>
+        </Stack.Navigator>
+       </NavigationContainer>
+    );
+};
+
+export default App;

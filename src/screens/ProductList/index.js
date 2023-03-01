@@ -11,7 +11,11 @@ const ProductList =(props) =>{
     return (<SafeAreaView style={styles.safeView}>
         <FlatList
          data={productlist}
-        renderItem={({item}) =>(<View><Text>{item.name}</Text></View>)}
+        renderItem={({item}) =>(
+        <View>
+            <Text>{item.name}</Text> 
+        <Text>{item.mota}</Text>
+        </View>)}
         keyExtractor={(item) => item.id} 
         />
     
